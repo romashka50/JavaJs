@@ -15,6 +15,7 @@
     "express": "^4.13.4",
     "express-session": "^1.13.0",
     "mongodb": "^2.1.14",
-    "mongoose": "^4.4.10"
+    "mongoose": "4.0.8",
+    "node-uuid": "^1.4.7"
   }
 }
