@@ -1,11 +1,10 @@
 var express = require('express');
 var router = express.Router();
-var UserHandler = require('../handlers/user');
-var handler = new UserHandler();
+var Handler = require('../handlers/post');
+var handler = new Handler();
 
 router.get('/', handler.fetch);
 router.get('/:id', handler.fetchById);
-router.get('/:id/posts', handler.fetchWithPosts);
 
 router.post('/', handler.create);
 router.put('/:id', handler.update);

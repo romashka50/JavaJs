@@ -6,7 +6,9 @@ var UserSchema = new Schema({
     _id: {type: String, default: uuid.v4},
     firstName: String,
     lastName: {type: String, default: 'Pupkin'},
-    dateOfBirth: {type: Date, default: Date.now}
+    dateOfBirth: {type: Date, default: Date.now},
+    posts: [{type: String, ref: 'post', default: null}],
+    friends: [String]
 });
 
 module.exports = mongoose.model('user', UserSchema);
