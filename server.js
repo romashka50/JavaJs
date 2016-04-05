@@ -1,5 +1,6 @@
 var express = require('express');
 var mongoose = require('mongoose');
+var path = require('path');
 var env = process.env;
 var db;
 
@@ -19,8 +20,12 @@ db.once('connected', function(){
     console.log('====== Connected ====');
 
     app = express();
-    //app.use(express.static(__dirname));
-    console.log(__dirname);
+    app.use(express.static(path.join(__dirname, 'public')));
+
+    app.get('/', function (req, res, next) {
+        res.sendFile(__dirname + '/index.html')
+    });
+
     require('./routes/index')(app);
     app.listen(3030, function () {
         console.log('====== Server started ======');

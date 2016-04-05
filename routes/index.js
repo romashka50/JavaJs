@@ -14,10 +14,7 @@ module.exports = function (app) {
     }
     
     app.use(bodyParser.json());
-    
-    app.get('/', function (req, res, next) {
-        res.status(200).send('Hello World');
-    });
+
     app.use('/users', userRouter);
     app.use('/posts', postRouter);
 
