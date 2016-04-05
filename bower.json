@@ -1,0 +1,22 @@
+{
+  "name": "javajs",
+  "description": "",
+  "main": "server.js",
+  "authors": [
+    "romashka50 <buchuk24333340>"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/romashka50/JavaJs",
+  "moduleType": [],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "backbone": "^1.3.2",
+    "jquery": "^2.2.2"
+  }
+}

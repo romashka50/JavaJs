@@ -5,10 +5,6 @@ var db;
 
 require('./config/' + env.NODE_ENV);
 
-/*db = mongoose.createConnection(env.DB_HOST, env.DB_NAME, env.DB_PORT, {
-    user: env.DB_USER,
-    pass: env.DB_PASS
-});*/
 mongoose.connect(env.DB_HOST, env.DB_NAME, env.DB_PORT, {
     user: env.DB_USER,
     pass: env.DB_PASS
@@ -23,6 +19,8 @@ db.once('connected', function(){
     console.log('====== Connected ====');
 
     app = express();
+    //app.use(express.static(__dirname));
+    console.log(__dirname);
     require('./routes/index')(app);
     app.listen(3030, function () {
         console.log('====== Server started ======');
