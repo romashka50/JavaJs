@@ -12,7 +12,7 @@ module.exports = function () {
 
         expand = query.expand;
 
-        if (!(expand instanceof Array)) {
+        if (expand && !(expand instanceof Array)) {
             expand = [expand];
         }
 
