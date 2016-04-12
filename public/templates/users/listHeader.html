@@ -8,6 +8,13 @@
         </tr>
     </thead>
     <tbody id="content">
-
+        <%collection.forEach(function(model){%>
+            <tr>
+                <td><%= model.get('firstName')%></td>
+                <td><%= model.get('lastName')%></td>
+                <td><%= model.get('dateOfBirth')%></td>
+                <td><%= model.get('friends').length%></td>
+            </tr>
+        <%})%>
     </tbody>
 </table>

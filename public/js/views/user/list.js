@@ -2,8 +2,7 @@ define([
     'backbone',
     'underscore',
     'collections/user',
-    'text!templates/users/listHeader.html',
-    'views/user/listItem'
+    'text!templates/users/listHeader.html'
 ], function(Backbone, _, Users, header, ListItem){
     return Backbone.View.extend({
         el: '#container',
@@ -24,11 +23,7 @@ define([
         },
 
         render: function(){
-            this.$el.html(this.template());
-
-            this.collection.each(function(model){
-                var view = new ListItem({model: model});
-            });
+            this.$el.html(this.template({collection: this.collection.models}));
         }
     });
 });
