@@ -3,9 +3,11 @@ require.config({
         backbone   : './libs/backbone/backbone',
         jQuery     : './libs/jquery/dist/jquery',
         underscore : './libs/underscore/underscore',
+        text : './libs/text/text',
         model      : './models',
         collections: './collections',
-        views      : './views'
+        views      : './views',
+        templates      : '../templates'
     },
 
     shim: {

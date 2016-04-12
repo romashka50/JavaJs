@@ -9,9 +9,7 @@ var users = new Collection({firstName: 'Petya'});
 
 define(['views/user/list'], function(UserList){
     function init(){
-        console.log('--- initialize app ----');
         var user = new UserList();
-        console.log(user);
     }
     
     
