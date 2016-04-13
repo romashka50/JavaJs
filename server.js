@@ -1,6 +1,9 @@
 var express = require('express');
 var mongoose = require('mongoose');
 var path = require('path');
+var expressSesion = require('express-session');
+var MemoryStore = require('connect-mongo')(expressSesion);
+
 var env = process.env;
 var db;
 
@@ -15,12 +18,24 @@ db.on('error', function(err){
     console.error(err);
 });
 db.once('connected', function(){
+    var sessionConfig = {
+        mongooseConnection: db
+    };
     var app;
 
     console.log('====== Connected ====');
 
     app = express();
     app.use(express.static(path.join(__dirname, 'public')));
+
+    app.use(expressSesion({
+        name             : 'java_js',
+        key              : "javaJs",
+        secret           : '1q2w3e4r5tdhgkdfhgejflkejgkdlgh8j0jge4547hh',
+        resave           : false,
+        saveUninitialized: false,
+        store            : new MemoryStore(sessionConfig)
+    }));
 
     app.get('/', function (req, res, next) {
         res.sendFile(__dirname + '/index.html')

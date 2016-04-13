@@ -5,16 +5,22 @@
             <th>Last Name</th>
             <th>Date of Birth</th>
             <th>Friends Count</th>
+            <th colspan="2"></th>
         </tr>
     </thead>
     <tbody id="content">
         <%collection.forEach(function(model){%>
-            <tr>
+            <tr id="<%=model.id%>">
                 <td><%= model.get('firstName')%></td>
                 <td><%= model.get('lastName')%></td>
                 <td><%= model.get('dateOfBirth')%></td>
                 <td><%= model.get('friends').length%></td>
+                <td><button id="editBtn">Edit</button></td>
+                <td><button id="removeBtn">Remove</button></td>
             </tr>
         <%})%>
     </tbody>
 </table>
+<div>
+    <button id="createBtn">Create</button>
+</div>

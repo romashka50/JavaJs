@@ -1,5 +1,6 @@
 var User = require('../models/user');
 var validator = require('validator');
+var crypto = require('crypto');
 
 module.exports = function () {
     this.fetch = function (req, res, next) {
@@ -142,15 +143,46 @@ module.exports = function () {
     this.create = function (req, res, next) {
         //ToDo validate body
         var body = req.body;
+        var shaSum = crypto.createHash('sha256');
+        var user;
+        
+        shaSum.update(body.pass);
+        body.pass = shaSum.digest('hex');
 
-        var user = new User(body);
-
+        user = new User(body);
         user.save(function (err, user) {
             if (err) {
                 return next(err);
             }
 
             res.status(201).send({_id: user._id});
+        });
+    };
+    
+    this.login = function (req, res, next) {
+        var body = req.body;
+        var shaSum = crypto.createHash('sha256');
+        var user;
+        
+        shaSum.update(body.pass);
+        body.pass = shaSum.digest('hex');
+        
+        User.findOne({firstName: body.firstName, pass: body.pass}, function (err, user) {
+            if (err) {
+                return next(err);
+            }
+
+            if(!user){
+                err = new Error('Bad credentials');
+                err.status = 400;
+                
+                return next(err);
+            }
+
+            delete user.pass;
+            req.session.logged = true;
+
+            res.status(200).send(user);
         });
     };
 
@@ -179,7 +211,7 @@ module.exports = function () {
                 return next(err);
             }
 
-            res.status(200).send({_id: user._id});
+            res.status(200).send({success: 'removed'});
         });
     };
 };

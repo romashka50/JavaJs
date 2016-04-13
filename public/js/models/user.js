@@ -6,16 +6,11 @@ define(['backbone'], function(Backbone){
             firstName: '',
             lastName: 'Pupkin',
             dateOfBirth: new Date(),
+            pass: '',
             posts: [],
             friends: []
         },
-
-        parse: function (resp) {
-            resp.a = 500;
-
-            return resp;
-        },
-
+        
         validate: function(attrs){
             if(attrs.dateOfBirth) {
                 if((Date.now() - attrs.dateOfBirth) < 567648000000){
@@ -23,10 +18,6 @@ define(['backbone'], function(Backbone){
                 }
             }
         },
-
-        /* urlRoot: function(){
-         return '/api/users/'
-         },*/
 
         initialize: function (options) {
             this.a = options.a;

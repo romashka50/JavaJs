@@ -1,16 +1,25 @@
 define([
-   /* 'views/user/list'*/
+   /* 'views/users/list'*/
     'backbone',
+    'jQuery',
     'router'
-], function(Backbone, Router){
+], function(Backbone, $, Router){
     function init(){
         var router = new Router();
+        var url = window.location.hash;
 
         Backbone.history.start({silent: true});
 
-        Backbone.history.navigate('#user', {trigger: true}); //* same result
-        //Backbone.history.navigate('#user');
-        //window.location.hash = '#user'; //* same result
+        $.ajax({
+            url: 'isAuth',
+            success: function(success){
+                Backbone.history.fragment = '';
+                Backbone.history.navigate(url, {trigger: true});
+            },
+            error: function(error){
+                Backbone.history.navigate('#myApp/login', {trigger: true});
+            }
+        });
     }
     
     

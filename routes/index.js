@@ -17,6 +17,14 @@ module.exports = function (app) {
 
     app.use('/users', userRouter);
     app.use('/posts', postRouter);
+    
+    app.get('/isAuth', function(req, res, next){
+        if(req.session && req.session.logged){
+            return res.status(200).send({success: 200});
+        }
+
+        res.status(401).send({error: 401});
+    });
 
     app.use(errorHandler);
 };
