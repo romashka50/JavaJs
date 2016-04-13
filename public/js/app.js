@@ -1,15 +1,16 @@
-/*
-var user = new Model({a: 100, firstName: 'Ivan'}, {parse: true});
-
-//var users = new Collection(user);
-var users = new Collection({firstName: 'Petya'});
-
-//users.fetch({reset: true});
-*/
-
-define(['views/user/list'], function(UserList){
+define([
+   /* 'views/user/list'*/
+    'backbone',
+    'router'
+], function(Backbone, Router){
     function init(){
-        var user = new UserList();
+        var router = new Router();
+
+        Backbone.history.start({silent: true});
+
+        Backbone.history.navigate('#user', {trigger: true}); //* same result
+        //Backbone.history.navigate('#user');
+        //window.location.hash = '#user'; //* same result
     }
     
     
