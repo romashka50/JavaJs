@@ -1,5 +1,5 @@
 define([
-    'backbone',
+    'backbone'
 ], function (Backbone) {
     return Backbone.View.extend({
         el    : '#container',
@@ -12,6 +12,7 @@ define([
         },
 
         initialize: function (opt) {
+            this.channel = opt.channel;
             this.render();
         },
 
@@ -58,6 +59,8 @@ define([
 
         render: function () {
             this.$el.html(this.template({collection: this.collection.models}));
+
+            this.channel.trigger('customEvent', {a: 20}, 1, 2);
         }
     });
 });

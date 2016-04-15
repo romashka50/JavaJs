@@ -77,6 +77,7 @@ define([
                 }
             });
         },
+        
         prevPage: function(){
             var self = this;
             var page = this.page - 1;

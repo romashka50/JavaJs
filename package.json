@@ -18,6 +18,7 @@
     "mongodb": "^2.1.14",
     "mongoose": "4.0.8",
     "node-uuid": "^1.4.7",
+    "socket.io": "^1.4.5",
     "validator": "^5.1.0"
   }
 }
