@@ -6,15 +6,17 @@ define([
 
         routes: {
             'myApp/login': 'login',
-            'myApp/:content': 'contentRouter',
+            'myApp/:content(/p=:page)(/c=:count)': 'contentRouter',
             'myApp/users/create': 'createUser',
             '*any': 'default'
         },
 
-        contentRouter: function(content){
+        contentRouter: function(content, page, count){
             var self = this;
             var collectionUrl = 'collections/' + content;
             var viewUrl = 'views/' + content + '/list';
+
+            console.log('p=', page, 'c=', count);
 
             function viewCreator(){
                 var collection = this;
@@ -33,10 +35,20 @@ define([
             require([
                 collectionUrl
             ], function(Collection){
-               var collection = new Collection();
-
-                collection.fetch({reset: true});
-                collection.on('reset', viewCreator, collection)
+                var collection;
+                
+                page = page || 1;
+                count = count || 10;
+                
+                collection = new Collection({
+                   reset: true,
+                   data: {
+                       page: page,
+                       count: count
+                   }
+               });
+                
+                collection.on('reset', viewCreator, collection);
             });
         },
         login: function(){

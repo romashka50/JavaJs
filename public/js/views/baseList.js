@@ -2,9 +2,11 @@ define([
     'backbone',
 ], function (Backbone) {
     return Backbone.View.extend({
-        el      : '#container',
-        events  : {
+        el    : '#container',
+        events: {
             'click #createBtn': 'onCreate',
+            'click #nextBtn'  : 'onNext',
+            'click #prevBtn'  : 'onPrev',
             'click #editBtn'  : 'onEdit',
             'click #removeBtn': 'onRemove'
         },
@@ -15,12 +17,18 @@ define([
 
         onCreate: function (e) {
             var navigateUrl = '#myApp/' + this.contentType + '/create';
-            
+
             e.stopPropagation();
 
             Backbone.history.navigate(navigateUrl, {trigger: true});
         },
-        onEdit: function (e) {
+        onNext: function (e) {
+            this.collection.nextPage();
+        },
+        onPrev: function (e) {
+            this.collection.prevPage();
+        },
+        onEdit  : function (e) {
             e.stopPropagation();
         },
         onRemove: function (e) {
@@ -31,18 +39,18 @@ define([
 
             e.stopPropagation();
 
-            if (!model){
+            if (!model) {
                 return false;
             }
 
             model.destroy({
-                wait: true,
-                success: function(model){
+                wait   : true,
+                success: function (model) {
                     console.log('-- Removed ' + model.id + ' ----');
                     Backbone.history.fragment = '';
                     Backbone.history.navigate('#myApp/users', {trigger: true});
                 },
-                error: function(model, xhr){
+                error  : function (model, xhr) {
                     alert(xhr.statusText);
                 }
             });

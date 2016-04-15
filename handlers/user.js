@@ -7,6 +7,9 @@ module.exports = function () {
         var dbQuery;
         var query = req.query;
         var aggregateObject = [];
+        var page = query.page || 1;
+        var limit = query.count || 10;
+        var skip = (page - 1) * limit;
         var expandBy;
         var expand;
         var i;
@@ -78,11 +81,15 @@ module.exports = function () {
                     posts  : {$push: '$posts'},
                     friends: {$push: '$friends'}
                 }
+            }, {
+                $skip: skip
+            }, {
+                $limit: limit
             });
 
             dbQuery = User.aggregate(aggregateObject);
         } else {
-            dbQuery = User.find({}, {__v: 0}).lean();
+            dbQuery = User.find({}, {__v: 0}).skip(skip).limit(limit).lean();
         }
 
         dbQuery.exec(function (err, users) {
@@ -145,7 +152,7 @@ module.exports = function () {
         var body = req.body;
         var shaSum = crypto.createHash('sha256');
         var user;
-        
+
         shaSum.update(body.pass);
         body.pass = shaSum.digest('hex');
 
@@ -158,24 +165,24 @@ module.exports = function () {
             res.status(201).send({_id: user._id});
         });
     };
-    
+
     this.login = function (req, res, next) {
         var body = req.body;
         var shaSum = crypto.createHash('sha256');
         var user;
-        
+
         shaSum.update(body.pass);
         body.pass = shaSum.digest('hex');
-        
+
         User.findOne({firstName: body.firstName, pass: body.pass}, function (err, user) {
             if (err) {
                 return next(err);
             }
 
-            if(!user){
+            if (!user) {
                 err = new Error('Bad credentials');
                 err.status = 400;
-                
+
                 return next(err);
             }
 
